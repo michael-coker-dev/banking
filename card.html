@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Your Card · Fund Grow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f8fbf8;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #1e2b1e;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wrapper {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* Navigation */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #e0ece0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background-color: #1f3d1f;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(35, 85, 45, 0.12);
+        }
+
+        .logo-svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.6rem;
+            letter-spacing: -0.02em;
+            color: #1c2e1c;
+        }
+
+        .logo-text span {
+            color: #2e7d32;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2b3a2b;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.15s;
+        }
+
+        .nav-links a:hover {
+            color: #2e7d32;
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            background: #f0f7f0;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #2e7d32;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn {
+            background-color: #d32f2f;
+            border: none;
+            color: white;
+            padding: 0.8rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .logout-btn:hover {
+            background-color: #b71c1c;
+        }
+
+        /* Card container */
+        .card-page {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 0;
+        }
+
+        .card-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #121f12;
+            margin-bottom: 2rem;
+        }
+
+        .scene {
+            width: 420px;
+            height: 260px;
+            perspective: 1000px;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-radius: 15px;
+            transform-style: preserve-3d;
+            transition: transform 1s ease;
+            cursor: pointer;
+
+            background: linear-gradient(125deg, #1f5a23 0%, #2e7d32 35%, #3b8c3f 70%, #1f5a23 100%);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15), inset 0 0 20px rgba(255, 255, 255, 0.05);
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            width: 75%;
+            height: 75%;
+            right: -15%;
+            top: -25%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .card::after {
+            content: "";
+            position: absolute;
+            left: -10%;
+            bottom: -45%;
+            width: 80%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            transform: rotate(-35deg);
+            pointer-events: none;
+        }
+
+        .card-content {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 2;
+            padding: 25px;
+            color: white;
+        }
+
+        /* Chip */
+        .chip {
+            width: 75px;
+            height: 50px;
+            border-radius: 9px;
+            background: linear-gradient(135deg, #d9b49c, #f0cdb7, #c99d84);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chip span {
+            position: absolute;
+            border: 2px solid rgba(60, 35, 25, 0.5);
+        }
+
+        .chip span:nth-child(1) {
+            width: 100%;
+            height: 16px;
+            top: 17px;
+            left: 0;
+            border-left: none;
+            border-right: none;
+        }
+
+        .chip span:nth-child(2) {
+            width: 25px;
+            height: 100%;
+            left: 25px;
+            top: 0;
+            border-top: none;
+            border-bottom: none;
+        }
+
+        .chip span:nth-child(3) {
+            width: 25px;
+            height: 100%;
+            right: 25px;
+            top: 0;
+            border-top: none;
+            border-bottom: none;
+        }
+
+        .chip span:nth-child(4) {
+            width: 30px;
+            height: 30px;
+            left: 22px;
+            top: 10px;
+            border-radius: 50%;
+        }
+
+        .bank {
+            position: absolute;
+            top: 28px;
+            right: 28px;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .details {
+            position: absolute;
+            left: 25px;
+            bottom: 75px;
+        }
+
+        .label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .number {
+            margin-top: 5px;
+            font-size: 19px;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .bottom-details {
+            display: flex;
+            gap: 25px;
+            margin-top: 16px;
+            font-size: 16px;
+        }
+
+        #toggleBtn {
+            position: absolute;
+            left: 25px;
+            bottom: 25px;
+            border: none;
+            outline: none;
+            padding: 10px 18px;
+            border-radius: 25px;
+            background: #ffffff;
+            color: #1f5a23;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        #toggleBtn:hover {
+            transform: scale(1.06);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        }
+
+        .mastercard {
+            position: absolute;
+            right: 25px;
+            bottom: 20px;
+            width: 80px;
+            height: 45px;
+        }
+
+        .mastercard span {
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            top: 0;
+        }
+
+        .mastercard .red {
+            background: #ed1c24;
+            left: 0;
+        }
+
+        .mastercard .yellow {
+            background: #f7d117;
+            right: 0;
+        }
+
+        .mastercard small {
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        /* Hidden details */
+        .card.hidden .number,
+        .card.hidden .bottom-details,
+        .card.hidden .label {
+            filter: blur(8px);
+            opacity: 0;
+            transition: 0.4s ease;
+        }
+
+        .back-link {
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 1rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            padding: 2rem 0;
+            border-top: 1px solid #e9f0e9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #607560;
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #2e4a2e;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: #2e7d32;
+        }
+
+        .copyright {
+            color: #829582;
+        }
+
+        @media (max-width: 500px) {
+            .scene {
+                width: 90vw;
+                height: 55vw;
+                max-height: 260px;
+            }
+
+            .card-content {
+                padding: 18px;
+            }
+
+            .bank {
+                top: 20px;
+                right: 20px;
+                font-size: 16px;
+            }
+
+            .chip {
+                width: 60px;
+                height: 40px;
+            }
+
+            .details {
+                left: 18px;
+                bottom: 65px;
+            }
+
+            .number {
+                font-size: 15px;
+            }
+
+            #toggleBtn {
+                left: 18px;
+                bottom: 18px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Navigation -->
+        <header class="navbar">
+            <a href="index.html" class="logo-area">
+                <div class="logo-icon">
+                    <svg class="logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="11" fill="#ffffff" fill-opacity="0.9" />
+                        <path d="M12 16C12 10 13 5 18 3C18 8 16 12 12 16Z" fill="#2e7d32" />
+                        <path d="M12 16C12 10 11 5 6 3C6 8 8 12 12 16Z" fill="#3b8c3f" />
+                        <path d="M12 16L12 21" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <span class="logo-text">fund<span>grow</span></span>
+            </a>
+            <nav class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="about.html">About</a>
+                <a href="support.html">Support</a>
+                <div class="user-badge" id="userBadge" style="display:none;">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <span id="userEmail">user@example.com</span>
+                </div>
+                <button class="logout-btn" id="logoutBtn" style="display:none;" onclick="handleLogout()">Log
+                    Out</button>
+            </nav>
+        </header>
+
+        <!-- Card display -->
+        <main class="card-page">
+            <h1 class="card-title">Your Virtual Card</h1>
+
+            <div class="scene">
+                <div class="card" id="card">
+                    <div class="card-content">
+                        <div class="chip">
+                            <span></span><span></span><span></span><span></span>
+                        </div>
+
+                        <div class="bank">FUND GROW</div>
+
+                        <div class="details">
+                            <div class="label" id="cardHolder">Card Holder</div>
+                            <div class="number" id="cardNumber">1111 1223 1223 1452</div>
+                            <div class="bottom-details">
+                                <div>
+                                    <span class="label">CVV:</span>
+                                    <span id="cvv">304</span>
+                                </div>
+                                <div>
+                                    <span class="label">Expiry:</span>
+                                    <span id="expiry">02/30</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="toggleBtn">Hide Card Details</button>
+
+                        <div class="mastercard">
+                            <span class="red"></span>
+                            <span class="yellow"></span>
+                            <small>MasterCard</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <a href="index.html" class="logo-area">
+                <div class="logo-icon" style="width: 34px; height: 34px; border-radius: 10px;">
+                    <svg class="logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        style="width: 22px; height: 22px;">
+                        <circle cx="12" cy="12" r="11" fill="#ffffff" fill-opacity="0.9" />
+                        <path d="M12 16C12 10 13 5 18 3C18 8 16 12 12 16Z" fill="#2e7d32" />
+                        <path d="M12 16C12 10 11 5 6 3C6 8 8 12 12 16Z" fill="#3b8c3f" />
+                        <path d="M12 16L12 21" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <span class="logo-text" style="font-size: 1.3rem;">fund<span>grow</span></span>
+            </a>
+            <div class="footer-links">
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="support.html">Support</a>
+            </div>
+            <div class="copyright">© 2025 Fund Grow. All rights reserved.</div>
+        </footer>
+    </div>
+
+    <!-- Firebase SDK and Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDMEti3NDdSHJyqA0Oob5yci2HZx4yU1oc",
+            authDomain: "banking-pjk.firebaseapp.com",
+            projectId: "banking-pjk",
+            storageBucket: "banking-pjk.firebasestorage.app",
+            messagingSenderId: "778240026105",
+            appId: "1:778240026105:web:b99b28112616d435978928"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // 3D tilt and hide/show details (original script)
+        const card = document.getElementById("card");
+        const button = document.getElementById("toggleBtn");
+        let hidden = false;
+
+        button.addEventListener("click", (event) => {
+            event.stopPropagation();
+            hidden = !hidden;
+            card.classList.toggle("hidden", hidden);
+            button.textContent = hidden ? "Show Card Details" : "Hide Card Details";
+        });
+
+        card.addEventListener("mousemove", (event) => {
+            const rect = card.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -8;
+            const rotateY = ((x - centerX) / centerX) * 8;
+            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        card.addEventListener("mouseleave", () => {
+            card.style.transform = "rotateX(0deg) rotateY(0deg)";
+        });
+
+        // Authentication
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const displayName = user.displayName || user.email || "User";
+                const email = user.email || "";
+                const firstInitial = displayName.charAt(0).toUpperCase();
+
+                // Update card holder name
+                document.getElementById('cardHolder').textContent = displayName;
+
+                // Update nav
+                document.getElementById('userBadge').style.display = 'flex';
+                document.getElementById('logoutBtn').style.display = 'inline-block';
+                document.getElementById('userEmail').textContent = email;
+                document.getElementById('userAvatar').textContent = firstInitial;
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        window.handleLogout = async function () {
+            try {
+                await signOut(auth);
+                window.location.href = "login.html";
+            } catch (error) {
+                console.error("Logout error:", error);
+                alert("Could not log out.");
+            }
+        };
+    </script>
+</body>
+
+</html>
