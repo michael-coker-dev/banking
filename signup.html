@@ -11,6 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
         rel="stylesheet">
     <style>
+        /* Reuse all styles from login.html for consistency */
         * {
             margin: 0;
             padding: 0;
@@ -18,8 +19,8 @@
         }
 
         body {
-            background-color: #ffffff;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f8fbf8;
+            font-family: 'Inter', sans-serif;
             color: #1e2b1e;
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
@@ -29,10 +30,11 @@
         }
 
         .wrapper {
-            max-width: 1280px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
             width: 100%;
+            flex: 1;
         }
 
         .navbar {
@@ -40,7 +42,6 @@
             align-items: center;
             justify-content: space-between;
             padding: 1.5rem 0;
-            border-bottom: 1px solid #edf2ed;
             flex-wrap: wrap;
             gap: 1rem;
         }
@@ -55,17 +56,12 @@
         .logo-icon {
             width: 44px;
             height: 44px;
-            background-color: #1f3d1f;
+            background: #1f3d1f;
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 10px rgba(35, 85, 45, 0.12);
-            transition: transform 0.2s ease;
-        }
-
-        .logo-icon:hover {
-            transform: scale(1.02);
         }
 
         .logo-svg {
@@ -82,7 +78,6 @@
 
         .logo-text span {
             color: #2e7d32;
-            font-weight: 700;
         }
 
         .nav-links {
@@ -124,46 +119,64 @@
             background: #f6fbf6;
         }
 
-        .signup-container {
+        .btn-primary {
+            background: #2e7d32;
+            border: none;
+            padding: 0.7rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 0.95rem;
+            box-shadow: 0 8px 18px rgba(46, 125, 50, 0.18);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #1f5a23;
+        }
+
+        .auth-container {
             display: flex;
-            align-items: stretch;
+            align-items: center;
             justify-content: center;
-            gap: 3rem;
+            gap: 4rem;
             padding: 3rem 0 4rem;
             flex-wrap: wrap;
             flex: 1;
         }
 
-        .signup-left {
-            flex: 1 1 400px;
-            max-width: 480px;
+        .auth-card {
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+            padding: 2.5rem 2rem;
+            width: 100%;
+            max-width: 440px;
+            border: 1px solid #ebf3eb;
         }
 
-        .signup-left h1 {
-            font-size: 2.8rem;
+        .auth-card h1 {
+            font-size: 2rem;
             font-weight: 700;
-            letter-spacing: -0.03em;
-            line-height: 1.2;
+            letter-spacing: -0.02em;
             color: #121f12;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.5rem;
         }
 
-        .signup-left .subtitle {
-            font-size: 1.1rem;
-            color: #465746;
+        .auth-card .subtitle {
+            color: #546854;
             margin-bottom: 2rem;
-        }
-
-        .signup-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
+            font-size: 1rem;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
             gap: 0.4rem;
+            margin-bottom: 1.2rem;
         }
 
         .form-group label {
@@ -192,10 +205,6 @@
             box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
         }
 
-        .form-group input::placeholder {
-            color: #9aac9a;
-        }
-
         .form-row {
             display: flex;
             gap: 1rem;
@@ -206,11 +215,11 @@
             flex: 1 1 200px;
         }
 
-        .password-input-wrapper {
+        .password-wrapper {
             position: relative;
         }
 
-        .password-input-wrapper input {
+        .password-wrapper input {
             padding-right: 3rem;
         }
 
@@ -222,12 +231,11 @@
             background: none;
             border: none;
             cursor: pointer;
-            padding: 0.2rem;
+            color: #7a8f7a;
+            transition: color 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #7a8f7a;
-            transition: color 0.2s;
         }
 
         .toggle-password:hover {
@@ -242,37 +250,32 @@
         .checkbox-group {
             display: flex;
             align-items: flex-start;
-            gap: 0.6rem;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
+        .checkbox-group input {
             margin-top: 0.2rem;
             accent-color: #2e7d32;
-            cursor: pointer;
-            flex-shrink: 0;
         }
 
         .checkbox-group label {
             font-size: 0.85rem;
             color: #546854;
-            font-weight: 400;
-            cursor: pointer;
         }
 
-        .checkbox-group label a {
+        .checkbox-group a {
             color: #2e7d32;
-            text-decoration: none;
             font-weight: 600;
+            text-decoration: none;
         }
 
-        .checkbox-group label a:hover {
+        .checkbox-group a:hover {
             text-decoration: underline;
         }
 
         .btn-signup {
-            background-color: #2e7d32;
+            background: #2e7d32;
             border: none;
             padding: 0.9rem 1.8rem;
             border-radius: 40px;
@@ -281,33 +284,25 @@
             cursor: pointer;
             transition: background 0.2s, transform 0.1s;
             font-size: 1.05rem;
+            width: 100%;
             box-shadow: 0 8px 18px rgba(46, 125, 50, 0.25);
             font-family: 'Inter', sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            width: 100%;
+            margin-bottom: 1rem;
         }
 
         .btn-signup:hover {
-            background-color: #1f5a23;
-        }
-
-        .btn-signup:active {
-            transform: scale(0.98);
-        }
-
-        .btn-signup svg {
-            width: 20px;
-            height: 20px;
+            background: #1f5a23;
         }
 
         .divider {
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin: 0.5rem 0;
+            margin: 1.5rem 0;
         }
 
         .divider-line {
@@ -319,7 +314,6 @@
         .divider-text {
             color: #7a8f7a;
             font-size: 0.8rem;
-            font-weight: 500;
         }
 
         .btn-google {
@@ -332,12 +326,12 @@
             cursor: pointer;
             transition: all 0.2s;
             font-size: 1rem;
+            width: 100%;
             font-family: 'Inter', sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.75rem;
-            width: 100%;
         }
 
         .btn-google:hover {
@@ -352,9 +346,9 @@
 
         .login-link {
             text-align: center;
-            margin-top: 0.5rem;
-            font-size: 0.95rem;
+            margin-top: 1.5rem;
             color: #546854;
+            font-size: 0.95rem;
         }
 
         .login-link a {
@@ -367,44 +361,46 @@
             text-decoration: underline;
         }
 
-        .signup-right {
-            flex: 1 1 360px;
-            max-width: 420px;
-            display: flex;
-            align-items: stretch;
+        .error-message {
+            color: #d32f2f;
+            background: #fdecea;
+            border: 1px solid #f5c6cb;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: none;
+            margin-bottom: 1rem;
         }
 
-        .benefits-card {
-            background: #ffffff;
-            border-radius: 28px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05), 0 8px 16px rgba(30, 60, 30, 0.04);
-            padding: 2.2rem 1.8rem;
-            border: 1px solid #ebf3eb;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
+        .error-message.show {
+            display: block;
         }
 
-        .benefits-card h3 {
-            font-size: 1.4rem;
+        .auth-side {
+            max-width: 380px;
+        }
+
+        .auth-side h2 {
+            font-size: 2rem;
             font-weight: 700;
             color: #1a2c1a;
-            letter-spacing: -0.01em;
+            margin-bottom: 1rem;
         }
 
-        .benefits-card p {
+        .auth-side p {
             color: #546854;
-            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
         }
 
-        .benefit-item {
+        .side-point {
             display: flex;
             align-items: flex-start;
             gap: 0.8rem;
+            margin-bottom: 1rem;
         }
 
-        .benefit-icon {
+        .side-icon {
             width: 38px;
             height: 38px;
             border-radius: 12px;
@@ -415,120 +411,29 @@
             flex-shrink: 0;
         }
 
-        .benefit-icon svg {
+        .side-icon svg {
             width: 20px;
             height: 20px;
             color: #2e7d32;
         }
 
-        .benefit-text {
-            flex: 1;
-        }
-
-        .benefit-text strong {
+        .side-text strong {
             display: block;
             color: #1f321f;
             font-size: 0.95rem;
-            margin-bottom: 0.2rem;
         }
 
-        .benefit-text span {
+        .side-text span {
             color: #7a8f7a;
             font-size: 0.85rem;
         }
 
-        .security-note {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid #edf2ed;
-            margin-top: auto;
-            color: #7a8f7a;
-            font-size: 0.8rem;
-        }
-
-        .security-note svg {
-            width: 16px;
-            height: 16px;
-            color: #2e7d32;
-            flex-shrink: 0;
-        }
-
-        .error-message {
-            color: #d32f2f;
-            background: #fdecea;
-            border: 1px solid #f5c6cb;
-            padding: 0.8rem 1rem;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            display: none;
-            margin-bottom: 0.5rem;
-        }
-
-        .error-message.show {
-            display: block;
-        }
-
-        .footer {
-            padding: 2rem 0 2rem;
-            border-top: 1px solid #e9f0e9;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            color: #607560;
-            font-size: 0.9rem;
-            gap: 1rem;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            text-decoration: none;
-            color: #2e4a2e;
-            font-weight: 500;
-        }
-
-        .footer-links a:hover {
-            color: #2e7d32;
-        }
-
-        .copyright {
-            color: #829582;
-        }
-
-        @media (max-width: 750px) {
-            .navbar {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-
-            .nav-links {
-                flex-wrap: wrap;
-                gap: 1rem;
-            }
-
-            .signup-container {
-                padding: 2rem 0 3rem;
+        @media (max-width: 800px) {
+            .auth-container {
                 gap: 2rem;
             }
 
-            .signup-left h1 {
-                font-size: 2.2rem;
-            }
-
-            .signup-left {
-                max-width: 100%;
-            }
-
-            .signup-right {
+            .auth-side {
                 max-width: 100%;
             }
         }
@@ -537,6 +442,7 @@
 
 <body>
     <div class="wrapper">
+        <!-- Navigation -->
         <header class="navbar">
             <a href="index.html" class="logo-area">
                 <div class="logo-icon">
@@ -556,36 +462,38 @@
             </nav>
         </header>
 
-        <main class="signup-container">
-            <div class="signup-left">
-                <h1>Create your<br>Fund Grow account</h1>
-                <p class="subtitle">Start growing your savings with purpose. It takes less than 3 minutes.</p>
+        <!-- Auth form -->
+        <main class="auth-container">
+            <div class="auth-card">
+                <h1>Create your account</h1>
+                <p class="subtitle">Start growing your savings with purpose.</p>
+
                 <div id="errorMessage" class="error-message"></div>
 
-                <form class="signup-form" onsubmit="handleSignup(event)">
+                <form onsubmit="handleSignup(event)">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="firstName">First name</label>
-                            <input type="text" id="firstName" name="firstName" placeholder="Jane" required>
+                            <input type="text" id="firstName" placeholder="Jane" required>
                         </div>
                         <div class="form-group">
                             <label for="lastName">Last name</label>
-                            <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+                            <input type="text" id="lastName" placeholder="Doe" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email address</label>
-                        <input type="email" id="email" name="email" placeholder="jane@example.com" required>
+                        <input type="email" id="email" placeholder="jane@example.com" required>
                     </div>
 
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <div class="password-input-wrapper">
-                            <input type="password" id="password" name="password" placeholder="At least 8 characters"
-                                required minlength="8">
+                        <div class="password-wrapper">
+                            <input type="password" id="password" placeholder="At least 8 characters" required
+                                minlength="8">
                             <button type="button" class="toggle-password" onclick="togglePassword()"
-                                aria-label="Toggle password visibility">
+                                aria-label="Toggle password">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
@@ -597,7 +505,7 @@
 
                     <div class="form-group">
                         <label for="accountType">Account type</label>
-                        <select id="accountType" name="accountType" required>
+                        <select id="accountType" required>
                             <option value="" disabled selected>Select account type</option>
                             <option value="personal">Personal</option>
                             <option value="business">Business</option>
@@ -606,7 +514,7 @@
                     </div>
 
                     <div class="checkbox-group">
-                        <input type="checkbox" id="terms" name="terms" required>
+                        <input type="checkbox" id="terms" required>
                         <label for="terms">I agree to the <a href="terms.html">Terms of Service</a> and <a
                                 href="privacy.html">Privacy Policy</a></label>
                     </div>
@@ -614,9 +522,9 @@
                     <button type="submit" class="btn-signup">
                         Create Account
                         <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
+                            stroke-linejoin="round" style="width:18px;height:18px;">
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <polyline points="12 5 19 12 12 19" />
                         </svg>
                     </button>
 
@@ -626,7 +534,7 @@
                         <div class="divider-line"></div>
                     </div>
 
-                    <button type="button" class="btn-google" onclick="handleGoogleSignUp()">
+                    <button type="button" class="btn-google" onclick="handleGoogleSignup()">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M21.35 11.1H12V13.9H18.69C18.36 17.18 15.43 19.35 12 19.35C8.06 19.35 4.9 16.19 4.9 12.25C4.9 8.31 8.06 5.15 12 5.15C15.15 5.15 17.3 6.72 18.31 7.81L20.35 5.77C18.85 4.09 16.28 3 12 3C6.48 3 2 7.48 2 13C2 18.52 6.48 23 12 23C18.52 23 23 18.52 23 13C23 12.35 22.93 11.72 22.82 11.1H21.35Z"
@@ -648,110 +556,56 @@
                 </form>
             </div>
 
-            <div class="signup-right">
-                <div class="benefits-card">
-                    <h3>Why join Fund Grow?</h3>
-                    <p>Join thousands who have already made the switch to mindful banking.</p>
-
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path
-                                    d="M12 22c4.97-4.97 8-9.9 8-13.72C20 4.28 16.42 2 12 2S4 4.28 4 8.28C4 12.1 7.03 17.03 12 22z" />
-                                <path d="M12 8v4" />
-                                <path d="M12 16h.01" />
-                            </svg>
-                        </div>
-                        <div class="benefit-text">
-                            <strong>Sustainable investing</strong>
-                            <span>ESG-focused portfolios that align with your values</span>
-                        </div>
-                    </div>
-
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="11" width="18" height="11" rx="2" />
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                            </svg>
-                        </div>
-                        <div class="benefit-text">
-                            <strong>Bank-grade security</strong>
-                            <span>Biometric login and real-time fraud monitoring</span>
-                        </div>
-                    </div>
-
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                            </svg>
-                        </div>
-                        <div class="benefit-text">
-                            <strong>Zero hidden fees</strong>
-                            <span>Transparent pricing with no surprises, ever</span>
-                        </div>
-                    </div>
-
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 12v-2a5 5 0 0 0-5-5H8a5 5 0 0 0-5 5v2" />
-                                <line x1="3" y1="12" x2="21" y2="12" />
-                                <line x1="3" y1="12" x2="3" y2="18" />
-                                <line x1="21" y1="12" x2="21" y2="18" />
-                                <line x1="3" y1="18" x2="21" y2="18" />
-                            </svg>
-                        </div>
-                        <div class="benefit-text">
-                            <strong>Smart insights</strong>
-                            <span>Real-time analytics to help you save more</span>
-                        </div>
-                    </div>
-
-                    <div class="security-note">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <!-- Side content -->
+            <div class="auth-side">
+                <h2>Why join Fund Grow?</h2>
+                <p>Join thousands who have already made the switch to mindful banking.</p>
+                <div class="side-point">
+                    <div class="side-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path
+                                d="M12 22c4.97-4.97 8-9.9 8-13.72C20 4.28 16.42 2 12 2S4 4.28 4 8.28C4 12.1 7.03 17.03 12 22z" />
                         </svg>
-                        Your data is encrypted and never shared
+                    </div>
+                    <div class="side-text">
+                        <strong>Sustainable investing</strong>
+                        <span>ESG-focused portfolios that align with your values</span>
+                    </div>
+                </div>
+                <div class="side-point">
+                    <div class="side-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" />
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                        </svg>
+                    </div>
+                    <div class="side-text">
+                        <strong>Bank-grade security</strong>
+                        <span>Biometric login and real-time fraud monitoring</span>
+                    </div>
+                </div>
+                <div class="side-point">
+                    <div class="side-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                        </svg>
+                    </div>
+                    <div class="side-text">
+                        <strong>Zero hidden fees</strong>
+                        <span>Transparent pricing with no surprises, ever</span>
                     </div>
                 </div>
             </div>
         </main>
-
-        <footer class="footer">
-            <a href="index.html" class="logo-area">
-                <div class="logo-icon" style="width: 34px; height: 34px; border-radius: 10px;">
-                    <svg class="logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                        style="width: 22px; height: 22px;">
-                        <circle cx="12" cy="12" r="11" fill="#ffffff" fill-opacity="0.9" />
-                        <path d="M12 16C12 10 13 5 18 3C18 8 16 12 12 16Z" fill="#2e7d32" />
-                        <path d="M12 16C12 10 11 5 6 3C6 8 8 12 12 16Z" fill="#3b8c3f" />
-                        <path d="M12 16L12 21" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" />
-                    </svg>
-                </div>
-                <span class="logo-text" style="font-size: 1.3rem;">fund<span>grow</span></span>
-            </a>
-            <div class="footer-links">
-                <a href="about.html">About</a>
-                <a href="terms.html">Terms</a>
-                <a href="privacy.html">Privacy</a>
-                <a href="support.html">Support</a>
-            </div>
-            <div class="copyright">© 2025 Fund Grow. All rights reserved.</div>
-        </footer>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+        import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
-        // New Firebase configuration for banking-pjk project
         const firebaseConfig = {
             apiKey: "AIzaSyDMEti3NDdSHJyqA0Oob5yci2HZx4yU1oc",
             authDomain: "banking-pjk.firebaseapp.com",
@@ -764,56 +618,51 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                window.location.href = "index.html";
-            }
-        });
 
-        window.handleSignup = async function (event) {
-            event.preventDefault();
+
+        window.togglePassword = function () {
+            const input = document.getElementById('password');
+            input.type = input.type === 'password' ? 'text' : 'password';
+        };
+
+        window.handleSignup = async function (e) {
+            e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.classList.remove('show');
-
-            if (!document.getElementById('terms').checked) {
+            const terms = document.getElementById('terms').checked;
+            if (!terms) {
                 showError('Please accept the Terms of Service and Privacy Policy.');
                 return;
             }
-
             try {
                 await createUserWithEmailAndPassword(auth, email, password);
-                window.location.href = "index.html";
+                window.location.href = "dashboard.html";
             } catch (error) {
                 showError(error.message);
             }
         };
 
-        window.handleGoogleSignUp = async function () {
+        window.handleGoogleSignup = async function () {
             const provider = new GoogleAuthProvider();
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.classList.remove('show');
             try {
                 await signInWithPopup(auth, provider);
-                window.location.href = "index.html";
+                window.location.href = "dashboard.html";
             } catch (error) {
-                showError(error.message);
+                if (error.code === 'auth/popup-blocked') {
+                    await signInWithRedirect(auth, provider);
+                } else {
+                    showError(error.message);
+                }
             }
         };
 
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.textContent = message;
-            errorDiv.classList.add('show');
-        }
+        onAuthStateChanged(auth, (user) => {
+            if (user) window.location.href = "dashboard.html";
+        });
 
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-        }
-        window.togglePassword = togglePassword;
+        getRedirectResult(auth).then((result) => {
+            if (result) window.location.href = "dashboard.html";
+        }).catch((error) => showError(error.message));
     </script>
 </body>
 

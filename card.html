@@ -10,22 +10,22 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
         rel="stylesheet">
+
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
-            background-color: #f8fbf8;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            color: #1e2b1e;
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background: #f8fbf8;
+            font-family: 'Inter', Arial, sans-serif;
+            color: #1e2b1e;
+            -webkit-font-smoothing: antialiased;
         }
 
         .wrapper {
@@ -143,7 +143,7 @@
             background-color: #b71c1c;
         }
 
-        /* Card container */
+        /* Card page */
         .card-page {
             flex: 1;
             display: flex;
@@ -160,10 +160,11 @@
             margin-bottom: 2rem;
         }
 
+        /* 3D scene */
         .scene {
-            width: 420px;
-            height: 260px;
-            perspective: 1000px;
+            width: min(420px, 90vw);
+            height: min(260px, 56vw);
+            perspective: 1200px;
             margin-bottom: 2rem;
         }
 
@@ -171,68 +172,77 @@
             width: 100%;
             height: 100%;
             position: relative;
-            border-radius: 15px;
             transform-style: preserve-3d;
-            transition: transform 1s ease;
+            transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
             cursor: pointer;
-
-            background: linear-gradient(125deg, #1f5a23 0%, #2e7d32 35%, #3b8c3f 70%, #1f5a23 100%);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15), inset 0 0 20px rgba(255, 255, 255, 0.05);
         }
 
-        .card::before {
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            color: white;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            background: linear-gradient(125deg, #1f5a23 0%, #2e7d32 40%, #3b8c3f 75%, #1f5a23 100%);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, .15), inset 0 0 25px rgba(255, 255, 255, .05);
+        }
+
+        .card-face::before {
             content: "";
             position: absolute;
             width: 75%;
             height: 75%;
             right: -15%;
-            top: -25%;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            top: -30%;
+            border: 2px solid rgba(255, 255, 255, .3);
             border-radius: 50%;
             pointer-events: none;
         }
 
-        .card::after {
+        .card-face::after {
             content: "";
             position: absolute;
-            left: -10%;
-            bottom: -45%;
             width: 80%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.05);
+            left: -30%;
+            bottom: -60%;
+            background: rgba(255, 255, 255, .05);
             transform: rotate(-35deg);
             pointer-events: none;
         }
 
-        .card-content {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            z-index: 2;
-            padding: 25px;
-            color: white;
+        /* Front face */
+        .card-front {
+            transform: rotateY(0deg);
         }
 
-        /* Chip */
         .chip {
+            position: absolute;
+            top: 25px;
+            left: 25px;
             width: 75px;
             height: 50px;
             border-radius: 9px;
-            background: linear-gradient(135deg, #d9b49c, #f0cdb7, #c99d84);
-            position: relative;
+            background: linear-gradient(135deg, #d7ad95, #f1cbb5, #bd8d75);
             overflow: hidden;
         }
 
         .chip span {
             position: absolute;
-            border: 2px solid rgba(60, 35, 25, 0.5);
+            border: 2px solid rgba(70, 40, 30, .5);
         }
 
         .chip span:nth-child(1) {
             width: 100%;
             height: 16px;
             top: 17px;
-            left: 0;
             border-left: none;
             border-right: none;
         }
@@ -241,7 +251,6 @@
             width: 25px;
             height: 100%;
             left: 25px;
-            top: 0;
             border-top: none;
             border-bottom: none;
         }
@@ -250,7 +259,6 @@
             width: 25px;
             height: 100%;
             right: 25px;
-            top: 0;
             border-top: none;
             border-bottom: none;
         }
@@ -265,63 +273,60 @@
 
         .bank {
             position: absolute;
-            top: 28px;
-            right: 28px;
+            top: 27px;
+            right: 27px;
             font-size: 20px;
-            font-weight: 600;
-            letter-spacing: 1px;
+            font-weight: bold;
         }
 
         .details {
             position: absolute;
             left: 25px;
-            bottom: 75px;
-        }
-
-        .label {
+            bottom: 70px;
             font-size: 14px;
-            opacity: 0.9;
         }
 
         .number {
-            margin-top: 5px;
+            margin-top: 7px;
             font-size: 19px;
-            letter-spacing: 1px;
-            font-weight: 500;
+            letter-spacing: 1.5px;
         }
 
         .bottom-details {
             display: flex;
             gap: 25px;
-            margin-top: 16px;
-            font-size: 16px;
+            margin-top: 15px;
+            font-size: 14px;
         }
 
-        #toggleBtn {
+        /* Front button */
+        .toggle-btn {
             position: absolute;
             left: 25px;
-            bottom: 25px;
+            bottom: 20px;
             border: none;
             outline: none;
             padding: 10px 18px;
             border-radius: 25px;
             background: #ffffff;
             color: #1f5a23;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s ease;
+            transition: transform 0.3s, box-shadow 0.3s;
+            z-index: 10;
         }
 
-        #toggleBtn:hover {
+        .toggle-btn:hover {
             transform: scale(1.06);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 20px rgba(255, 255, 255, .5);
         }
 
+        /* Mastercard logo */
         .mastercard {
             position: absolute;
             right: 25px;
-            bottom: 20px;
+            bottom: 17px;
             width: 80px;
             height: 45px;
         }
@@ -331,48 +336,109 @@
             width: 45px;
             height: 45px;
             border-radius: 50%;
-            top: 0;
         }
 
         .mastercard .red {
-            background: #ed1c24;
             left: 0;
+            background: #ed1c24;
         }
 
         .mastercard .yellow {
-            background: #f7d117;
             right: 0;
+            background: #f7d117;
         }
 
         .mastercard small {
             position: absolute;
-            bottom: -2px;
             right: 0;
-            color: white;
-            font-size: 10px;
+            bottom: -2px;
+            font-size: 9px;
             font-weight: bold;
         }
 
-        /* Hidden details */
-        .card.hidden .number,
-        .card.hidden .bottom-details,
-        .card.hidden .label {
-            filter: blur(8px);
-            opacity: 0;
-            transition: 0.4s ease;
+        /* Back face */
+        .card-back {
+            transform: rotateY(180deg);
         }
 
-        .back-link {
-            color: #2e7d32;
-            text-decoration: none;
-            font-weight: 500;
-            margin-top: 1rem;
+        .back-bank {
+            position: absolute;
+            right: 25px;
+            top: 22px;
+            font-size: 18px;
+            font-weight: bold;
         }
 
-        .back-link:hover {
-            text-decoration: underline;
+        .magnetic-strip {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 70px;
+            height: 48px;
+            background: #030303;
         }
 
+        .signature {
+            position: absolute;
+            left: 25px;
+            right: 25px;
+            top: 135px;
+            height: 35px;
+            background: #ddd;
+            color: #111;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            font-size: 11px;
+        }
+
+        .signature span {
+            opacity: .6;
+        }
+
+        .signature strong {
+            background: white;
+            padding: 4px 12px;
+        }
+
+        .back-info {
+            position: absolute;
+            left: 25px;
+            bottom: 60px;
+            width: 200px;
+            font-size: 9px;
+            opacity: .55;
+        }
+
+        .back-logo {
+            bottom: 18px;
+        }
+
+        /* Back face button */
+        .back-btn {
+            position: absolute;
+            left: 25px;
+            bottom: 20px;
+            border: none;
+            outline: none;
+            padding: 10px 18px;
+            border-radius: 25px;
+            background: #ffffff;
+            color: #1f5a23;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            z-index: 10;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.06);
+            box-shadow: 0 0 20px rgba(255, 255, 255, .5);
+        }
+
+        /* Footer */
         .footer {
             padding: 2rem 0;
             border-top: 1px solid #e9f0e9;
@@ -405,47 +471,59 @@
         }
 
         @media (max-width: 500px) {
-            .scene {
-                width: 90vw;
-                height: 55vw;
-                max-height: 260px;
-            }
-
-            .card-content {
-                padding: 18px;
+            .chip {
+                width: 60px;
+                height: 40px;
+                top: 18px;
+                left: 18px;
             }
 
             .bank {
                 top: 20px;
-                right: 20px;
+                right: 18px;
                 font-size: 16px;
-            }
-
-            .chip {
-                width: 60px;
-                height: 40px;
             }
 
             .details {
                 left: 18px;
-                bottom: 65px;
+                bottom: 60px;
             }
 
             .number {
                 font-size: 15px;
             }
 
-            #toggleBtn {
+            .bottom-details {
+                font-size: 12px;
+            }
+
+            .toggle-btn {
                 left: 18px;
-                bottom: 18px;
-                font-size: 13px;
+                bottom: 15px;
+                padding: 8px 13px;
+                font-size: 12px;
+            }
+
+            .back-btn {
+                left: 18px;
+                bottom: 15px;
+                padding: 8px 13px;
+                font-size: 12px;
+            }
+
+            .back-info {
+                bottom: 55px;
+                left: 18px;
+                width: 180px;
             }
         }
     </style>
 </head>
 
 <body>
+
     <div class="wrapper">
+
         <!-- Navigation -->
         <header class="navbar">
             <a href="index.html" class="logo-area">
@@ -478,7 +556,9 @@
 
             <div class="scene">
                 <div class="card" id="card">
-                    <div class="card-content">
+
+                    <!-- FRONT -->
+                    <div class="card-face card-front">
                         <div class="chip">
                             <span></span><span></span><span></span><span></span>
                         </div>
@@ -486,21 +566,15 @@
                         <div class="bank">FUND GROW</div>
 
                         <div class="details">
-                            <div class="label" id="cardHolder">Card Holder</div>
+                            <div id="cardHolder">Card Holder</div>
                             <div class="number" id="cardNumber">1111 1223 1223 1452</div>
                             <div class="bottom-details">
-                                <div>
-                                    <span class="label">CVV:</span>
-                                    <span id="cvv">304</span>
-                                </div>
-                                <div>
-                                    <span class="label">Expiry:</span>
-                                    <span id="expiry">02/30</span>
-                                </div>
+                                <div>CVV: <span id="cvv">304</span></div>
+                                <div>Expiry: <span id="expiry">02/30</span></div>
                             </div>
                         </div>
 
-                        <button id="toggleBtn">Hide Card Details</button>
+                        <button class="toggle-btn" id="toggleBtnFront">Hide Card Details</button>
 
                         <div class="mastercard">
                             <span class="red"></span>
@@ -508,10 +582,30 @@
                             <small>MasterCard</small>
                         </div>
                     </div>
+
+                    <!-- BACK -->
+                    <div class="card-face card-back">
+                        <div class="back-bank">FUND GROW</div>
+                        <div class="magnetic-strip"></div>
+                        <div class="signature">
+                            <span>Authorized Signature</span>
+                            <strong>123</strong>
+                        </div>
+                        <div class="back-info">This card is issued by Fund Grow. If found, please return it to the
+                            issuing bank.</div>
+                        <div class="mastercard back-logo">
+                            <span class="red"></span>
+                            <span class="yellow"></span>
+                            <small>MasterCard</small>
+                        </div>
+                        <button class="back-btn" id="toggleBtnBack">View Card Details</button>
+                    </div>
+
                 </div>
             </div>
 
-            <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+            <a href="dashboard.html" style="color:#2e7d32; text-decoration:none; font-weight:500; margin-top:1rem;">←
+                Back to Dashboard</a>
         </main>
 
         <!-- Footer -->
@@ -536,6 +630,7 @@
             </div>
             <div class="copyright">© 2025 Fund Grow. All rights reserved.</div>
         </footer>
+
     </div>
 
     <!-- Firebase SDK and Script -->
@@ -555,44 +650,73 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // 3D tilt and hide/show details (original script)
         const card = document.getElementById("card");
-        const button = document.getElementById("toggleBtn");
-        let hidden = false;
+        const toggleBtnFront = document.getElementById("toggleBtnFront");
+        const toggleBtnBack = document.getElementById("toggleBtnBack");
 
-        button.addEventListener("click", (event) => {
-            event.stopPropagation();
-            hidden = !hidden;
-            card.classList.toggle("hidden", hidden);
-            button.textContent = hidden ? "Show Card Details" : "Hide Card Details";
-        });
+        let flipped = false;
 
-        card.addEventListener("mousemove", (event) => {
+        function flipCard() {
+            card.style.transform = '';
+            card.style.transition = 'transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1)';
+
+            flipped = !flipped;
+            card.classList.toggle("flipped", flipped);
+
+            setTimeout(() => {
+                if (!flipped) {
+                    card.style.transition = 'transform 0.08s ease-out';
+                } else {
+                    card.style.transition = 'transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1)';
+                }
+            }, 700);
+        }
+
+        card.addEventListener("mousemove", function (event) {
+            if (flipped) return;
+            card.style.transition = 'transform 0.08s ease-out';
             const rect = card.getBoundingClientRect();
             const x = event.clientX - rect.left;
             const y = event.clientY - rect.top;
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            const rotateX = ((y - centerY) / centerY) * -8;
-            const rotateY = ((x - centerX) / centerX) * 8;
+            const rotateX = ((y - centerY) / centerY) * -5;
+            const rotateY = ((x - centerX) / centerX) * 5;
             card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
 
-        card.addEventListener("mouseleave", () => {
-            card.style.transform = "rotateX(0deg) rotateY(0deg)";
+        card.addEventListener("mouseleave", function () {
+            if (!flipped) {
+                card.style.transform = "rotateX(0deg) rotateY(0deg)";
+                card.style.transition = 'transform 0.3s ease-out';
+                setTimeout(() => {
+                    card.style.transition = 'transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1)';
+                }, 300);
+            }
         });
 
-        // Authentication
+        toggleBtnFront.addEventListener("click", function (event) {
+            event.stopPropagation();
+            flipCard();
+        });
+
+        toggleBtnBack.addEventListener("click", function (event) {
+            event.stopPropagation();
+            flipCard();
+        });
+
+        card.addEventListener("click", function (event) {
+            if (event.target === toggleBtnFront || event.target === toggleBtnBack) return;
+            flipCard();
+        });
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 const displayName = user.displayName || user.email || "User";
                 const email = user.email || "";
                 const firstInitial = displayName.charAt(0).toUpperCase();
 
-                // Update card holder name
                 document.getElementById('cardHolder').textContent = displayName;
-
-                // Update nav
                 document.getElementById('userBadge').style.display = 'flex';
                 document.getElementById('logoutBtn').style.display = 'inline-block';
                 document.getElementById('userEmail').textContent = email;
@@ -612,6 +736,7 @@
             }
         };
     </script>
+
 </body>
 
 </html>

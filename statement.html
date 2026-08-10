@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Statements · Fund Grow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f8fbf8;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #1e2b1e;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wrapper {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* Navigation */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #e0ece0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background-color: #1f3d1f;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(35, 85, 45, 0.12);
+        }
+
+        .logo-svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.6rem;
+            letter-spacing: -0.02em;
+            color: #1c2e1c;
+        }
+
+        .logo-text span {
+            color: #2e7d32;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2b3a2b;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.15s;
+        }
+
+        .nav-links a:hover {
+            color: #2e7d32;
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            background: #f0f7f0;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #2e7d32;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn {
+            background-color: #d32f2f;
+            border: none;
+            color: white;
+            padding: 0.8rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .logout-btn:hover {
+            background-color: #b71c1c;
+        }
+
+        /* Content */
+        .statements-container {
+            max-width: 800px;
+            margin: 2rem auto 3rem;
+            padding: 0 1rem;
+        }
+
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #121f12;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .balance-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 1.2rem 1.5rem;
+            border: 1px solid #e0ece0;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .balance-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #546854;
+        }
+
+        .balance-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a2c1a;
+        }
+
+        .transactions-list {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e0ece0;
+            overflow: hidden;
+        }
+
+        .transaction-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #edf2ed;
+        }
+
+        .transaction-row:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .transaction-description {
+            font-weight: 600;
+            color: #1f321f;
+            font-size: 0.95rem;
+        }
+
+        .transaction-date {
+            font-size: 0.8rem;
+            color: #7a8f7a;
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .transaction-amount.positive {
+            color: #2e7d32;
+        }
+
+        .transaction-amount.negative {
+            color: #d32f2f;
+        }
+
+        .running-balance {
+            font-size: 0.85rem;
+            color: #546854;
+            margin-left: 1rem;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #7a8f7a;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            background: #fdecea;
+            border: 1px solid #f5c6cb;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: none;
+            margin-bottom: 1rem;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .footer {
+            padding: 2rem 0;
+            border-top: 1px solid #e9f0e9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #607560;
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #2e4a2e;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: #2e7d32;
+        }
+
+        .copyright {
+            color: #829582;
+        }
+
+        @media (max-width: 600px) {
+            .transaction-row {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .running-balance {
+                margin-left: 0;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Navigation -->
+        <header class="navbar">
+            <a href="index.html" class="logo-area">
+                <div class="logo-icon">
+                    <svg class="logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="11" fill="#ffffff" fill-opacity="0.9" />
+                        <path d="M12 16C12 10 13 5 18 3C18 8 16 12 12 16Z" fill="#2e7d32" />
+                        <path d="M12 16C12 10 11 5 6 3C6 8 8 12 12 16Z" fill="#3b8c3f" />
+                        <path d="M12 16L12 21" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <span class="logo-text">fund<span>grow</span></span>
+            </a>
+            <nav class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="about.html">About</a>
+                <a href="support.html">Support</a>
+                <div class="user-badge" id="userBadge" style="display:none;">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <span id="userEmail">user@example.com</span>
+                </div>
+                <button class="logout-btn" id="logoutBtn" style="display:none;" onclick="handleLogout()">Log
+                    Out</button>
+            </nav>
+        </header>
+
+        <!-- Statements content -->
+        <main class="statements-container">
+            <h1 class="page-title">Account Statements</h1>
+
+            <!-- Error message -->
+            <div id="errorMessage" class="error-message"></div>
+
+            <!-- Current balance -->
+            <div class="balance-card">
+                <span class="balance-label">Available Balance</span>
+                <span class="balance-amount" id="currentBalance">$0.00</span>
+            </div>
+
+            <!-- Transactions list -->
+            <div class="transactions-list" id="transactionsList">
+                <p class="empty-state">Loading transactions...</p>
+            </div>
+
+            <a href="dashboard.html"
+                style="display:inline-block; margin-top:1.5rem; color:#2e7d32; text-decoration:none; font-weight:500;">←
+                Back to Dashboard</a>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <a href="index.html" class="logo-area">
+                <div class="logo-icon" style="width: 34px; height: 34px; border-radius: 10px;">
+                    <svg class="logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        style="width: 22px; height: 22px;">
+                        <circle cx="12" cy="12" r="11" fill="#ffffff" fill-opacity="0.9" />
+                        <path d="M12 16C12 10 13 5 18 3C18 8 16 12 12 16Z" fill="#2e7d32" />
+                        <path d="M12 16C12 10 11 5 6 3C6 8 8 12 12 16Z" fill="#3b8c3f" />
+                        <path d="M12 16L12 21" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <span class="logo-text" style="font-size: 1.3rem;">fund<span>grow</span></span>
+            </a>
+            <div class="footer-links">
+                <a href="about.html">About</a>
+                <a href="terms.html">Terms</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="support.html">Support</a>
+            </div>
+            <div class="copyright">© 2025 Fund Grow. All rights reserved.</div>
+        </footer>
+    </div>
+
+    <!-- Firebase SDK and Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+        import {
+            getFirestore, doc, getDoc, collection, query, orderBy, getDocs
+        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDMEti3NDdSHJyqA0Oob5yci2HZx4yU1oc",
+            authDomain: "banking-pjk.firebaseapp.com",
+            projectId: "banking-pjk",
+            storageBucket: "banking-pjk.firebasestorage.app",
+            messagingSenderId: "778240026105",
+            appId: "1:778240026105:web:b99b28112616d435978928"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+        }
+
+        function showError(msg) {
+            const el = document.getElementById('errorMessage');
+            el.textContent = msg;
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 5000);
+        }
+
+        async function loadData() {
+            if (!currentUser) return;
+            const userDocRef = doc(db, 'users', currentUser.uid);
+
+            try {
+                // Get user balance
+                const userDoc = await getDoc(userDocRef);
+                if (!userDoc.exists()) {
+                    document.getElementById('currentBalance').textContent = formatCurrency(0);
+                } else {
+                    document.getElementById('currentBalance').textContent = formatCurrency(userDoc.data().balance || 0);
+                }
+
+                // Get transactions
+                const transactionsRef = collection(db, 'users', currentUser.uid, 'transactions');
+                const q = query(transactionsRef, orderBy('timestamp', 'desc'));
+                const querySnapshot = await getDocs(q);
+
+                const listEl = document.getElementById('transactionsList');
+                listEl.innerHTML = '';
+
+                if (querySnapshot.empty) {
+                    listEl.innerHTML = '<p class="empty-state">No transactions yet.</p>';
+                    return;
+                }
+
+                // Calculate running balance from oldest to newest, then display in reverse
+                const txArray = [];
+                querySnapshot.forEach((doc) => {
+                    txArray.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Sort by timestamp ascending to compute running balance correctly
+                txArray.sort((a, b) => {
+                    const timeA = a.timestamp ? a.timestamp.toMillis() : 0;
+                    const timeB = b.timestamp ? b.timestamp.toMillis() : 0;
+                    return timeA - timeB;
+                });
+
+                let runningBalance = 0;
+                const txWithBalance = txArray.map((tx) => {
+                    if (tx.type === 'deposit') {
+                        runningBalance += tx.amount;
+                    } else if (tx.type === 'transfer_out') {
+                        runningBalance -= tx.amount;
+                    }
+                    return { ...tx, runningBalance };
+                });
+
+                // Now display in descending order (newest first)
+                txWithBalance.reverse().forEach((tx) => {
+                    const row = document.createElement('div');
+                    row.className = 'transaction-row';
+
+                    const isPositive = tx.type === 'deposit';
+                    const amountClass = isPositive ? 'positive' : 'negative';
+                    const sign = isPositive ? '+' : '-';
+                    const date = tx.timestamp ? new Date(tx.timestamp.toMillis()).toLocaleString() : 'Unknown date';
+                    const description = tx.description || tx.type;
+
+                    row.innerHTML = `
+            <div class="transaction-info">
+              <span class="transaction-description">${description}</span>
+              <span class="transaction-date">${date}</span>
+            </div>
+            <div style="display:flex; align-items:center;">
+              <span class="transaction-amount ${amountClass}">${sign}${formatCurrency(tx.amount)}</span>
+              <span class="running-balance">Bal: ${formatCurrency(tx.runningBalance)}</span>
+            </div>
+          `;
+                    listEl.appendChild(row);
+                });
+            } catch (error) {
+                console.error("Error loading statements:", error);
+                showError("Failed to load your statements. Please try again.");
+            }
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+
+                const displayName = user.displayName || user.email || "User";
+                const email = user.email || "";
+                const firstInitial = displayName.charAt(0).toUpperCase();
+
+                document.getElementById('userBadge').style.display = 'flex';
+                document.getElementById('logoutBtn').style.display = 'inline-block';
+                document.getElementById('userEmail').textContent = email;
+                document.getElementById('userAvatar').textContent = firstInitial;
+
+                loadData();
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        window.handleLogout = async function () {
+            try {
+                await signOut(auth);
+                window.location.href = "login.html";
+            } catch (error) {
+                console.error("Logout error:", error);
+                alert("Could not log out.");
+            }
+        };
+    </script>
+</body>
+
+</html>

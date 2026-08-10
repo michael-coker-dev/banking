@@ -408,7 +408,7 @@
 
         <!-- Dashboard content -->
         <div class="dashboard-content">
-            <h1 class="greeting">Welcome back, <span id="displayName">User</span> 👋</h1>
+            <h1 class="greeting">Welcome back, <span id="displayName">User</span> </h1>
 
             <!-- Stats cards -->
             <div class="stats-grid">
@@ -453,15 +453,15 @@
                     </svg>
                     Deposit
                 </button>
-                <button class="action-btn">
+                <button class="action-btn" id="vt-card">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <rect x="1" y="4" width="22" height="16" rx="2" />
                         <line x1="1" y1="10" x2="23" y2="10" />
                     </svg>
-                    Pay Bills
+                    Virtual Card
                 </button>
-                <button class="action-btn">
+                <button class="action-btn" id="statement">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M21 12v-2a5 5 0 0 0-5-5H8a5 5 0 0 0-5 5v2" />
@@ -641,6 +641,14 @@
 
         document.getElementById('transfer').addEventListener('click', function () {
             window.location.href = "transfer.html";
+        });
+
+        document.getElementById('vt-card').addEventListener('click', function () {
+            window.location.href = "card.html";
+        });
+
+        document.getElementById('statement').addEventListener('click', function () {
+            window.location.href = "statements.html";
         });
     </script>
 </body>
