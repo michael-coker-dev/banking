@@ -468,40 +468,9 @@
             }
         }
 
-        window.handleDeposit = async function (event) {
+window.handleDeposit = async function (event) {
             event.preventDefault();
-            const amount = parseFloat(document.getElementById('depositAmount').value);
-            if (isNaN(amount) || amount <= 0) {
-                showError("Please enter a valid positive amount.");
-                return;
-            }
-
-            try {
-                await runTransaction(db, async (transaction) => {
-                    const userDoc = await transaction.get(currentUserDocRef);
-                    if (!userDoc.exists()) {
-                        throw new Error("User document does not exist.");
-                    }
-                    const currentBalance = userDoc.data().balance || 0;
-                    const newBalance = currentBalance + amount;
-                    transaction.update(currentUserDocRef, { balance: newBalance });
-                });
-
-                // Record deposit transaction
-                await addDoc(collection(db, 'users', currentUser.uid, 'transactions'), {
-                    type: 'deposit',
-                    amount: amount,
-                    description: 'Deposit',
-                    timestamp: serverTimestamp()
-                });
-
-                showSuccess(`Successfully deposited ${formatCurrency(amount)}.`);
-                document.getElementById('depositAmount').value = '';
-                loadBalance();
-            } catch (error) {
-                console.error("Deposit error: ", error);
-                showError("Deposit failed. Please try again.");
-            }
+            showError('Demo only: deposits are disabled. No real money is accepted.');
         };
 
         window.handleLogout = async function () {
