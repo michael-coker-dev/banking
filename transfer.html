@@ -468,54 +468,9 @@
             }
         }
 
-        window.handleTransfer = async function (event) {
+window.handleTransfer = async function (event) {
             event.preventDefault();
-            const recipientEmail = document.getElementById('recipientEmail').value.trim();
-            const amount = parseFloat(document.getElementById('transferAmount').value);
-
-            if (!recipientEmail || isNaN(amount) || amount <= 0) {
-                showError("Please enter a valid recipient email and a positive amount.");
-                return;
-            }
-
-            if (recipientEmail.toLowerCase() === currentUser.email.toLowerCase()) {
-                showError("You cannot transfer to your own email.");
-                return;
-            }
-
-            try {
-                await runTransaction(db, async (transaction) => {
-                    const userDoc = await transaction.get(currentUserDocRef);
-                    if (!userDoc.exists()) {
-                        throw new Error("User document does not exist.");
-                    }
-                    const currentBalance = userDoc.data().balance || 0;
-                    if (currentBalance < amount) {
-                        throw new Error("Insufficient funds.");
-                    }
-                    const newBalance = currentBalance - amount;
-                    transaction.update(currentUserDocRef, { balance: newBalance });
-                });
-
-                await addDoc(collection(db, 'users', currentUser.uid, 'transactions'), {
-                    type: 'transfer_out',
-                    amount: amount,
-                    description: `Transfer to ${recipientEmail}`,
-                    timestamp: serverTimestamp()
-                });
-
-                showSuccess(`Successfully transferred ${formatCurrency(amount)} to ${recipientEmail}.`);
-                document.getElementById('transferAmount').value = '';
-                document.getElementById('recipientEmail').value = '';
-                loadBalance();
-            } catch (error) {
-                console.error("Transfer error: ", error);
-                if (error.message === "Insufficient funds.") {
-                    showError("Insufficient funds for this transfer.");
-                } else {
-                    showError("Transfer failed. Please try again.");
-                }
-            }
+            showError('Demo only: transfers are disabled. No real money is moved.');
         };
 
         window.handleLogout = async function () {
