@@ -6,8 +6,8 @@
 
 - Firebase web configuration, including the Firebase API key, is included in the frontend. Firebase web API keys are generally identifiers, not server secrets; access must be protected by Firebase Security Rules, Authentication and API restrictions.
 - Firestore Security Rules are not included in this repository, so access control for the live Firebase project cannot be verified from this source.
-- The deposit page currently increases a user's balance from client-side code. A browser must never be trusted to create money or credit balances.
-- The transfer page currently debits the sender but does not atomically credit the recipient. It also records a transfer history item separately from the balance update.
+- The original deposit handler increased a user's balance from client-side code. The UI handler has now been disabled, but this does not replace strict Firestore Security Rules.
+- The original transfer handler debited the sender without atomically crediting the recipient. Its UI handler has now been disabled. A real transfer requires trusted atomic server-side processing.
 - The homepage previously contained unsupported claims about a large member count, bank-grade security, biometric login, encryption and fraud monitoring. Those claims have been removed from the public-facing copy.
 - The `about.html` file is empty and needs a proper project/about page.
 
