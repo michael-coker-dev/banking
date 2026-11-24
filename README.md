@@ -33,7 +33,7 @@ Open `http://localhost:8000/` in a browser. Firebase-backed screens require a co
 
 ## Important implementation limitations
 
-The current deposit flow writes a balance increase from client-side code, which is not an acceptable design for real money. The current transfer flow debits the sender but does not atomically credit the recipient. Firestore security rules were not present in this repository and have not been verified.
+The original deposit handler credited a balance from client-side code, and the original transfer handler debited the sender without atomically crediting the recipient. Both UI handlers have now been disabled and display a demo-only notice. This frontend change is not a security boundary: Firestore Security Rules were not present in this repository and have not been verified.
 
 Do not use this project with real funds or personal financial data. A production implementation would require trusted server-side transaction processing, strict Firestore rules, atomic ledger entries, idempotency, reconciliation, audit logging, fraud controls and independent security review.
 
