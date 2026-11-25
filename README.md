@@ -4,6 +4,10 @@ Fund Grow is a front-end banking dashboard concept built to demonstrate responsi
 
 > **Demo only.** This repository is not a bank, payment processor, deposit-taking institution or investment service. It is not approved for real deposits, transfers, cards or financial transactions. Any displayed balance or transaction data is sample/demo data.
 
+## Portfolio case study
+
+See the [Fund Grow project case study](https://michael-coker-dev.github.io/michael-coker-portfolio/fund-grow.html) for the project brief, interface scope, technologies and known limitations.
+
 ## Interface features
 
 - Landing page and product overview
